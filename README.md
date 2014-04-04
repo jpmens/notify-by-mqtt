@@ -47,7 +47,7 @@ As an example payload:
     "hoststatetype": "HARD", 
     "servicedesc": "JPtest", 
     "servicedisplayname": "JPtest", 
-    "serviceoutput": "CRITICAL: file /tmp/f1: ENOENT", 
+    "serviceoutput": "file /tmp/f1: ENOENT", 
     "servicestate": "CRITICAL", 
     "servicestateid": "2", 
     "shortdatetime": "2014-04-04 16:38:25", 
