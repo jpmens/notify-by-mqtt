@@ -11,7 +11,7 @@ except ImportError:
     import simplejson as json
 import os
 
-hostname = '172.16.153.1'
+hostname = '127.0.0.1'
 port = 1883
 qos=0
 retain=False
