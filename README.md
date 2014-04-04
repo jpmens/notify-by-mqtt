@@ -2,6 +2,39 @@
 
 a Nagios/Icinga notification module which wraps data into JSON and fires it off to an MQTT broker.
 
+## `icinga.cfg`
+
+```
+enable_environment_macros=1
+```
+
+### `commands.cfg`
+
+```
+define command{
+    command_name notify-service-by-mqtt
+    command_line /home/jpm/icinga/notify-mqtt.py
+    }
+```
+
+### `contacts_icinga.cfg`
+
+```
+define contact{
+        contact_name                    root
+        alias                           Root
+        service_notification_period     24x7
+        host_notification_period        24x7
+        service_notification_options    w,u,c,r
+        host_notification_options       d,r
+#        service_notification_commands   notify-service-by-email
+        service_notification_commands   notify-service-by-mqtt
+        host_notification_commands      notify-host-by-email
+        email                           root@localhost
+        }
+```
+
+
 As an example payload:
 
 ```json
