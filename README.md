@@ -56,7 +56,9 @@ As an example payload for a host notification:
     "timet": "1396622305"
 }
 
-```As an example payload for a service notification:
+```
+
+As an example payload for a service notification:
 
 ```json
 {
