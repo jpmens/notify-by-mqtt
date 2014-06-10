@@ -18,33 +18,63 @@ retain=False
 auth=None
 prefix = 'ICINGA_'
 
+data = {
+    "_type" : "icinga"
+    }
 
 env_keys = [
     'DATE',                 # 2014-04-04
     'EVENTSTARTTIME',       # 1396620153
-    'HOSTDISPLAYNAME',      # localhost
-    'HOSTNAME',             # localhost
-    'HOSTSTATETYPE',        # HARD
-    'SERVICEDESC',          # JPtest
-    'SERVICEDISPLAYNAME',   # JPtest
-    'SERVICEOUTPUT',        # File /tmp/f1 is missing
-    'SERVICESTATE',         # CRITICAL
-    'SERVICESTATEID',       # 2
     'SHORTDATETIME',        # 2014-04-04 16:02:53
     'TIME',                 # 16:02:53
     'TIMET',                # 1396620173
     ]
 
-data = {
-    "_type" : "icinga"
-    }
 for key in env_keys:
     val = os.getenv(prefix + key, None)
     if val is not None:
         data[key.lower()] = val
 
-state = os.getenv(prefix + 'SERVICESTATE', 'UNKNOWN').lower()
-    
+
+state = os.getenv(prefix + 'SERVICESTATE', '').lower()
+if state is None or state == '':
+	state = os.getenv(prefix + 'HOSTSTATE', '').lower()
+	if state is None or state == '':
+		state = 'unknown'
+	else:
+		env_keys = [
+		    'HOSTDISPLAYNAME',      # localhost
+		    'HOSTNAME',             # localhost
+		    'HOSTSTATE',            # UP
+		    'HOSTSTATETYPE',        # HARD
+		    'HOSTSTATEID',          # 2
+		    'HOSTOUTPUT',           # Ping OK
+		    ]
+
+		for key in env_keys:
+		    val = os.getenv(prefix + key, None)
+		    if val is not None:
+			data[key.lower()] = val
+
+else:
+	env_keys = [
+	    'HOSTDISPLAYNAME',      # localhost
+	    'HOSTNAME',             # localhost
+	    'HOSTSTATE',            # UP
+	    'HOSTSTATETYPE',        # HARD
+	    'SERVICEDESC',          # JPtest
+	    'SERVICEDISPLAYNAME',   # JPtest
+	    'SERVICEOUTPUT',        # File /tmp/f1 is missing
+	    'SERVICESTATE',         # CRITICAL
+	    'SERVICESTATEID',       # 2
+	    ]
+
+	for key in env_keys:
+	    val = os.getenv(prefix + key, None)
+	    if val is not None:
+		data[key.lower()] = val
+
+
 topic = 'monitoring/' + state
 
 payload = None
