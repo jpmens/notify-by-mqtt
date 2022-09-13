@@ -54,7 +54,7 @@ if state is None or state == '':
 		for key in env_keys:
 		    val = os.getenv(prefix + key, None)
 		    if val is not None:
-			data[key.lower()] = val
+		        data[key.lower()] = val
 
 else:
 	env_keys = [
@@ -72,7 +72,7 @@ else:
 	for key in env_keys:
 	    val = os.getenv(prefix + key, None)
 	    if val is not None:
-		data[key.lower()] = val
+	        data[key.lower()] = val
 
 
 topic = 'monitoring/' + state
